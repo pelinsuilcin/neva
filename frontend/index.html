@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+<link rel="icon" href="image/favicon.png" type="image/png">
+
+
+    
+    <title>Neva - AI Sohbet Platformu</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <!-- Nav -->
+    <nav class="navbar">
+        <div class="nav-container">
+             <div class="logo-container" onclick="showPage('home')">
+            <img src="image/nevalogo.png" alt="Neva Logo" class="logo-image">
+            <span class="logo-text">NEVA</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('home')" class="active">Ana Sayfa</a></li>
+                <li><a href="chat_landing.html" onclick="showPage('chat'); loadChat('anxiety')">Sohbet</a></li>
+                <li><a href="#" onclick="showPage('features')">Özellikler</a></li>
+                <li><a href="#" onclick="showPage('about')">Hakkında</a></li>
+            </ul>
+
+             <div class="auth-buttons">
+            <a href="girisyap.html" class="nav-login" target="nav-login">Giriş Yap</a>
+            <a href="kayitol.html"class="nav-cta" target="nav-cta">Kayıt Ol</a> 
+        </div>
+       
+       <script>
+    function openAuthPage(type) {
+   
+        const authPageUrl = type === 'login' ? '/login' : '/signup';
+        window.open(authPageUrl, '_blank');
+        
+  showAuthModal(type);
+    }
+</script>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+ 
+        <!-- Mobile Menu-->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+    </nav>
+
+    <div class="page-container">
+        <!-- Home Page -->
+        <section id="home" class="page-section active">
+        
+        <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="floating-element" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+            <div class="floating-element" style="top: 60%; left: 20%; animation-delay: 2s;"></div>
+            <div class="floating-element" style="top: 40%; right: 15%; animation-delay: 4s;"></div>
+            <div class="floating-element" style="top: 80%; right: 25%; animation-delay: 1s;"></div>
+        <div class="floating-element" style="left: 53.0675%; top: 46.3857%; animation-delay: 0.368891s; background-color: rgb(255, 255, 255);"></div><div class="floating-element" style="left: 88.285%; top: 0.809385%; animation-delay: 0.58136s; background-color: rgb(0, 128, 255);"></div><div class="floating-element" style="left: 68.1603%; top: 59.0771%; animation-delay: 1.65228s; background-color: rgb(255, 255, 255);"></div><div class="floating-element" style="left: 20.4884%; top: 37.9383%; animation-delay: 4.75692s; background-color: rgb(0, 245, 255);"></div><div class="floating-element" style="left: 69.6857%; top: 65.6184%; animation-delay: 0.336272s; background-color: rgb(0, 128, 255);"></div><div class="floating-element" style="left: 5.14001%; top: 77.2008%; animation-delay: 3.07424s; background-color: rgb(255, 255, 255);"></div><div class="floating-element" style="left: 73.7628%; top: 96.1448%; animation-delay: 1.46427s; background-color: rgb(0, 128, 255);"></div><div class="floating-element" style="left: 46.6118%; top: 98.5388%; animation-delay: 5.22052s; background-color: rgb(0, 245, 255);"></div></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Zihinsel Sağlığınızın Dijital Dostu</h1>
+            <p class="hero-subtitle">Neva, yapay zeka ile desteklenen empati odaklı sohbet asistanınız. 7/24 yanınızda, her zaman anlayışlı.</p>
+                <a href="kayitol.html" class="nav-cta" target="nav-cta">Ücretsiz Deneyin</a> 
+             
+            </a>
+        </div>
+    </section>
+<!-- scroll bitiş -->
+    
+
+    <!-- Stats Section -->
+ <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number" data-target="15000" data-suffix="+">0</div>
+                <div class="stat-label">Aktif Kullanıcı</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="100000" data-suffix="+">0</div>
+                <div class="stat-label">Sohbet Oturumu</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="99" data-suffix="%">0</div>
+                <div class="stat-label">Memnuniyet</div>
+            </div>
+            <div class="stat-item">
+                <div class="yediyirmidort">7/24</div>
+
+                <div class="stat-label">Kesintisiz Hizmet</div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- kullanıcı yorumları başlangıç -->
+<div class="container">
+        <div class="header">
+             <div class="section-header fade-in visible">
+                <h2 class="section-title">Kullanıcılarımız Ne Diyor?</h2>
+                <p class="section-subtitle">Neva ile deneyimlerini paylaşan kullanıcılarımızdan gelen gerçek yorumlar</p>
+            </div>
+
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="testimonial-card">
+                    <div class="quote-marks">"</div>
+                    <div class="testimonial-text">
+                        Neva ile konuşmaya başladıktan sonra kendimi çok daha iyi hissediyorum. Gerçek bir arkadaşım varmış gibi.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">E</div>
+                        <div class="author-info">
+                            <h3>Elif Yılmaz</h3>
+                            <p>Öğretmen</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-marks">"</div>
+                    <div class="testimonial-text">
+                        Kaygı krizlerinde Neva'nın desteği sayesinde kendimi toparlayabiliyorum. Çok değerli bir asistan.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h3>Murat Kaya</h3>
+                            <p>Mühendis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-marks">"</div>
+                    <div class="testimonial-text">
+                        Gece uyuyamadığım zamanlar Neva ile konuşarak sakinleşiyorum. Gerçekten anlayışlı ve yardımcı.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <h3>Selin Özkan</h3>
+                            <p>Grafik Tasarımcı</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-marks">"</div>
+                    <div class="testimonial-text">
+                        Neva'nın önerileri sayesinde stresli günlerimi daha kolay atlatıyorum. Harika bir deneyim!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h3>Ahmet Demir</h3>
+                            <p>İnsan Kaynakları</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="navigation nav-prev" onclick="prevSlide()">
+                <div class="nav-arrow left"></div>
+            </button>
+            <button class="navigation nav-next" onclick="nextSlide()">
+                <div class="nav-arrow right"></div>
+            </button>
+        </div>
+
+        <div class="indicators" id="indicators">
+            <div class="indicator active" onclick="goToSlide(0)"></div>
+            <div class="indicator" onclick="goToSlide(1)"></div>
+            <div class="indicator" onclick="goToSlide(2)"></div>
+            <div class="indicator" onclick="goToSlide(3)"></div>
+        </div>
+    </div>
+<!-- kullanıcı yorumları animasyonu -->
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 4;
+        const track = document.getElementById('carouselTrack');
+        const indicators = document.querySelectorAll('.indicator');
+
+        function updateSlide() {
+            const offset = -currentSlide * 100;
+            track.style.transform = `translateX(${offset}%)`;
+            
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlide();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+
+        let autoPlayInterval = setInterval(nextSlide, 5000);
+
+        const container = document.querySelector('.carousel-container');
+        container.addEventListener('mouseenter', () => {
+            clearInterval(autoPlayInterval);
+        });
+
+        container.addEventListener('mouseleave', () => {
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        });
+
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        });
+
+        container.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const diffX = startX - currentX;
+            const threshold = 50;
+            
+            if (Math.abs(diffX) > threshold) {
+                if (diffX > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+    </script>
+<!-- kullanıcı yorumları bitiş -->
+
+    <!-- İletişim -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info fade-in visible">
+                <h2 class="contact-title">Bizimle İletişime Geçin</h2>
+                <p class="contact-description">Sorularınız, önerileriniz veya destek talepleriniz için bizimle iletişime geçebilirsiniz. Ekibimiz size yardımcı olmaktan mutluluk duyar.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <strong>E-posta</strong><br>
+                            destek@neva.com.tr
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <strong>WhatsApp</strong><br>
+                            +90 (555) 123 45 67
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">💬</div>
+                        <div>
+                            <strong>Canlı Destek</strong><br>
+                            7/24 Aktif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form fade-in visible">
+                <form>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Ad Soyad</label>
+                        <input type="text" id="name" class="form-input" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">E-posta</label>
+                        <input type="email" id="email" class="form-input" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Konu</label>
+                        <input type="text" id="subject" class="form-input" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Mesajınız</label>
+                        <textarea id="message" class="form-input form-textarea" required=""></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Mesajı Gönder</button>
+                </form>
+            </div>
+        </div>
+    </section>
+        </section>
+
+      
+
+        <!-- Özellikler -->
+        <section id="features" class="page-section">
+            <h1 class="page-title fade-in">Neva'nın Özellikleri</h1>
+            <p class="page-subtitle fade-in">Yapay zeka teknolojisi ile desteklenen gelişmiş özellikler</p>
+            
+            <div class="features-grid fade-in">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Sesli Etkileşim</h3>
+                    <p class="feature-description">Gelişmiş STT (Speech-to-Text) ve TTS (Text-to-Speech) teknolojileri</p>
+                    <ul class="feature-list">
+                        <li>Doğal ses tanıma</li>
+                        <li>Empati odaklı sesli yanıtlar</li>
+                        <li>Kısa süreli hafıza</li>
+                        <li>Kriz anı desteği</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">Akıllı Analiz</h3>
+                    <p class="feature-description">Kullanıcı duygularını anlayan ve analiz eden yapay zeka</p>
+                    <ul class="feature-list">
+                        <li>Duygu analizi</li>
+                        <li>Davranış kalıpları</li>
+                        <li>Kişiselleştirilmiş öneriler</li>
+                        <li>Profesyonel yönlendirme</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Güvenlik & Gizlilik</h3>
+                    <p class="feature-description">Kullanıcı verilerinin tam güvenliği ve gizliliği</p>
+                    <ul class="feature-list">
+                        <li>End-to-end şifreleme</li>
+                        <li>Veri saklanmaz</li>
+                        <li>Anonim sohbet</li>
+                        <li>GDPR uyumlu</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Çoklu Platform</h3>
+                    <p class="feature-description">Web, mobil ve masaüstü uygulamalarında kesintisiz deneyim</p>
+                    <ul class="feature-list">
+                        <li>Responsive web arayüzü</li>
+                        <li>Mobil uygulama</li>
+                        <li>Senkronize veriler</li>
+                        <li>Offline destek</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧬</div>
+                    <h3 class="feature-title">Öğrenme Yeteneği</h3>
+                    <p class="feature-description">Sürekli öğrenen ve gelişen yapay zeka teknolojisi</p>
+                    <ul class="feature-list">
+                        <li>Makine öğrenmesi</li>
+                        <li>Kullanıcı geri bildirim</li>
+                        <li>Sürekli iyileştirme</li>
+                        <li>Güncel bilgi tabanı</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Kullanıcı Dostu Arayüz</h3>
+                    <p class="feature-description">Basit, anlaşılır ve erişilebilir kullanıcı arayüzü</p>
+                    <ul class="feature-list">
+                        <li>Minimal tasarım</li>
+                        <li>Kolay navigasyon</li>
+                        <li>Erişilebilirlik</li>
+                        <li>Kişiselleştirilebilir</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hakkında-->
+        <section id="about" class="page-section">
+            <h1 class="page-title fade-in">Neva Hakkında</h1>
+            <p class="page-subtitle fade-in">Yapay zeka destekli psikolojik destek platformu</p>
+            
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <h3 style="color: #00f5ff; margin-bottom: 1rem;">Misyonumuz</h3>
+                    <p>Neva, modern yaşamın getirdiği stres, kaygı ve yalnızlık gibi zorluklarla mücadele eden bireylere destek olmak amacıyla geliştirilmiş, yapay zeka tabanlı bir psikolojik destek ve sohbet asistanıdır.</p>
+                    
+                    <h3 style="color: #00f5ff; margin-bottom: 1rem; margin-top: 2rem;">Vizyonumuz</h3>
+                    <p>Herkesin ihtiyaç duyduğu anda konuşabileceği bir "dijital sırdaş" yaratarak zihinsel farkındalığı artırmak ve yalnızlık hissini azaltmaktır.</p>
+                    
+                    <h3 style="color: #00f5ff; margin-bottom: 1rem; margin-top: 2rem;">Teknolojimiz</h3>
+                    <p>Gelişmiş doğal dil işleme, duygu analizi ve makine öğrenmesi teknolojileri kullanarak, kullanıcılarına empati odaklı, anlayışlı ve güvenli bir sohbet deneyimi sunuyoruz.</p>
+                </div>
+                
+                <div class="about-image">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🤖</div>
+                    <h3 style="color: #00f5ff; margin-bottom: 1rem;">Neva AI</h3>
+                    <p>Yapay zeka destekli psikolojik destek asistanı</p>
+                </div>
+            </div>
+        
+        </section>
+    </div>
+
+
+ <!-- sayaç başlangıç --> 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statItems = document.querySelectorAll('.stat-item');
+            let animationTimers = [];
+            
+            function resetAnimation() {
+                // Önceki animasyonları temizle
+                animationTimers.forEach(timer => clearInterval(timer));
+                animationTimers = [];
+                
+                // Tüm sayıları sıfırla
+                statItems.forEach(item => {
+                    const numberElement = item.querySelector('.stat-number');
+                    numberElement.textContent = '0';
+                    item.classList.remove('visible');
+                    item.removeAttribute('data-animated');
+                });
+            }
+            
+            function animateValue(element, target, suffix = '') {
+                const duration = 2000;
+                const start = 0;
+                const increment = target / (duration / 16); 
+                let current = start;
+                const isPercentage = suffix === '%';
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        clearInterval(timer);
+                        current = target;
+                    }
+                    
+                    if (isPercentage) {
+                        element.textContent = Math.floor(current) + suffix;
+                    } else {
+                        element.textContent = Math.floor(current).toLocaleString() + suffix;
+                    }
+                }, 16);
+                
+                animationTimers.push(timer);
+            }
+            
+            function checkVisibility() {
+                const triggerBottom = window.innerHeight / 5 * 4;
+                let anyVisible = false;
+                
+                statItems.forEach(item => {
+                    const itemTop = item.getBoundingClientRect().top;
+                    
+                    if (itemTop < triggerBottom) {
+                        anyVisible = true;
+                        item.classList.add('visible');
+                        
+                        const numberElement = item.querySelector('.stat-number');
+                        const target = parseInt(numberElement.getAttribute('data-target'));
+                        const suffix = numberElement.getAttribute('data-suffix') || '';
+                        
+                        if (!item.hasAttribute('data-animated') || 
+                            numberElement.textContent === '0' + suffix) {
+                            animateValue(numberElement, target, suffix);
+                            item.setAttribute('data-animated', 'true');
+                        }
+                    } else {
+                        item.classList.remove('visible');
+                        const numberElement = item.querySelector('.stat-number');
+                        const suffix = numberElement.getAttribute('data-suffix') || '';
+                        numberElement.textContent = '0' + (suffix === '%' ? suffix : '');
+                        item.removeAttribute('data-animated');
+                    }
+                });
+                
+                if (!anyVisible) {
+                    resetAnimation();
+                }
+            }
+            
+            window.addEventListener('scroll', checkVisibility);
+            window.addEventListener('resize', checkVisibility);
+            checkVisibility();
+        });
+    </script>
+<!-- sayaç bitiş-->
+
+
+
+    <script>
+        // nav
+        function showPage(pageId) {
+
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const clickedElement = event ? event.target : null;
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
+            
+            if (targetPage) {
+                targetPage.classList.add('fade-in');
+            }
+        }
+
+       
+</script>
+
+<!-- en alttaki iletişimin altındaki bölüm -->
+
+ <!-- <div style="background-color: #001311; padding: 15px 0; text-align: center; border-top: 1px solid #000000;">
+    <div style="color: #777; font-size: 14px;">
+        © 2025 NEVA
+    </div>  -->
+</body>
+</html>

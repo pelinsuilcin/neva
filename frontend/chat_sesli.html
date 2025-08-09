@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neva - Sesli Sohbet</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="image/favicon.png" type="image/png">
+    <link rel="stylesheet" href="chat_sesli.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-container" onclick="window.location.href='index.html'">
+                <img src="image/nevalogo.png" alt="Neva Logo" class="logo-image">
+                <span class="logo-text">NEVA</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="chat_menu.html" class="active">Sohbet</a></li>
+                <li><a href="index.html#features">Özellikler</a></li>
+                <li><a href="index.html#about">Hakkında</a></li>
+            </ul>
+
+            <div class="auth-buttons">
+                <a href="girisyap.html" class="nav-login">Giriş Yap</a>
+                <a href="kayitol.html" class="nav-cta">Kayıt Ol</a> 
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <h1 class="page-title">Neva ile Sesli Sohbet</h1>
+        <p class="page-subtitle">
+            Yapay zeka destekli psikolojik destek asistanınız ile doğal bir şekilde konuşun. 
+            Mikrofon butonuna basın ve sorunuzu sorun.
+        </p>
+        
+        <div class="voice-chat-container">
+            <!-- AI Avatar -->
+            <div class="ai-avatar" id="aiAvatar">N</div>
+            
+            <!-- Status Display -->
+            <div class="status-display">
+                <div class="status-text" id="statusText">Dinlemeye Hazır</div>
+                <div class="status-description" id="statusDescription">
+                    Mikrofon butonuna basarak konuşmaya başlayın
+                </div>
+            </div>
+
+            <!-- Wave Animation (Hidden by default) -->
+            <div class="wave-container" id="waveContainer" style="display: none;">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+
+            <!-- Voice Controls -->
+            <div class="voice-controls">
+                <button class="voice-btn mic-btn" id="micBtn" title="Mikrofon">
+                    🎤
+                </button>
+                <button class="voice-btn stop-btn" id="stopBtn" title="Durdur" style="display: none;">
+                    ⏹️
+                </button>
+                <button class="voice-btn settings-btn" id="settingsBtn" title="Ayarlar">
+                    ⚙️
+                </button>
+            </div>
+
+            <!-- Messages -->
+            <div id="messageContainer"></div>
+
+            <!-- Transcript Container -->
+            <div class="transcript-container">
+                <div class="transcript-label">Konuşma Geçmişi</div>
+                <div class="transcript-box" id="transcriptBox">
+                    <div class="transcript-item ai">
+                        <div class="transcript-speaker">Neva</div>
+                        <div class="transcript-text">
+                            Merhaba! Ben Neva, yapay zeka destekli psikolojik destek asistanınız. 
+                            Size nasıl yardımcı olabilirim? Lütfen konuşmaya başlayın.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div class="settings-panel" id="settingsPanel">
+                <div class="setting-group">
+                    <label class="setting-label" for="voiceSelect">Ses Seçimi:</label>
+                    <select class="setting-select" id="voiceSelect">
+                        <option value="">Varsayılan</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label class="setting-label" for="speedRange">Konuşma Hızı:</label>
+                    <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="1" class="setting-select">
+                </div>
+                <div class="setting-group">
+                    <label class="setting-label" for="pitchRange">Ses Tonu:</label>
+                    <input type="range" id="pitchRange" min="0" max="2" step="0.1" value="1" class="setting-select">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class VoiceChat {
+            constructor() {
+                this.recognition = null;
+                this.synthesis = window.speechSynthesis;
+                this.isListening = false;
+                this.isSpeaking = false;
+                this.voices = [];
+                
+                this.elements = {
+                    aiAvatar: document.getElementById('aiAvatar'),
+                    statusText: document.getElementById('statusText'),
+                    statusDescription: document.getElementById('statusDescription'),
+                    waveContainer: document.getElementById('waveContainer'),
+                    micBtn: document.getElementById('micBtn'),
+                    stopBtn: document.getElementById('stopBtn'),
+                    settingsBtn: document.getElementById('settingsBtn'),
+                    transcriptBox: document.getElementById('transcriptBox'),
+                    settingsPanel: document.getElementById('settingsPanel'),
+                    voiceSelect: document.getElementById('voiceSelect'),
+                    speedRange: document.getElementById('speedRange'),
+                    pitchRange: document.getElementById('pitchRange'),
+                    messageContainer: document.getElementById('messageContainer')
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.checkBrowserSupport();
+                this.setupSpeechRecognition();
+                this.setupEventListeners();
+                this.loadVoices();
+                this.speakWelcome();
+            }
+
+            checkBrowserSupport() {
+                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                    this.showMessage('Tarayıcınız ses tanıma özelliğini desteklemiyor.', 'error');
+                    return false;
+                }
+
+                if (!('speechSynthesis' in window)) {
+                    this.showMessage('Tarayıcınız ses sentezi özelliğini desteklemiyor.', 'error');
+                    return false;
+                }
+
+                return true;
+            }
+
+            setupSpeechRecognition() {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                this.recognition = new SpeechRecognition();
+                
+                this.recognition.continuous = false;
+                this.recognition.interimResults = false;
+                this.recognition.lang = 'tr-TR';
+
+                this.recognition.onstart = () => {
+                    this.isListening = true;
+                    this.updateStatus('Dinliyorum...', 'Lütfen konuşun');
+                    this.elements.aiAvatar.classList.add('listening');
+                    this.elements.waveContainer.style.display = 'flex';
+                    this.elements.micBtn.classList.add('active');
+                    this.elements.stopBtn.style.display = 'block';
+                };
+
+                this.recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    this.addToTranscript('user', 'Siz', transcript);
+                    this.processUserInput(transcript);
+                };
+
+                this.recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    this.showMessage('Ses tanıma hatası: ' + event.error, 'error');
+                    this.stopListening();
+                };
+
+                this.recognition.onend = () => {
+                    this.stopListening();
+                };
+            }
+
+            setupEventListeners() {
+                this.elements.micBtn.addEventListener('click', () => {
+                    if (this.isListening) {
+                        this.stopListening();
+                    } else {
+                        this.startListening();
+                    }
+                });
+
+                this.elements.stopBtn.addEventListener('click', () => {
+                    this.stopListening();
+                    this.stopSpeaking();
+                });
+
+                this.elements.settingsBtn.addEventListener('click', () => {
+                    this.toggleSettings();
+                });
+
+                this.elements.aiAvatar.addEventListener('click', () => {
+                    if (!this.isListening && !this.isSpeaking) {
+                        this.startListening();
+                    }
+                });
+
+                // Settings event listeners
+                this.elements.speedRange.addEventListener('input', () => {
+                    this.updateSettings();
+                });
+
+                this.elements.pitchRange.addEventListener('input', () => {
+                    this.updateSettings();
+                });
+
+                this.elements.voiceSelect.addEventListener('change', () => {
+                    this.updateSettings();
+                });
+            }
+
+            loadVoices() {
+                const updateVoices = () => {
+                    this.voices = this.synthesis.getVoices();
+                    const turkishVoices = this.voices.filter(voice => 
+                        voice.lang.startsWith('tr') || 
+                        voice.name.toLowerCase().includes('turkish') ||
+                        voice.name.toLowerCase().includes('türk')
+                    );
+
+                    this.elements.voiceSelect.innerHTML = '<option value="">Varsayılan</option>';
+                    
+                    turkishVoices.forEach((voice, index) => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.textContent = `${voice.name} (${voice.lang})`;
+                        this.elements.voiceSelect.appendChild(option);
+                    });
+
+                    if (turkishVoices.length === 0) {
+                        this.voices.forEach((voice, index) => {
+                            const option = document.createElement('option');
+                            option.value = index;
+                            option.textContent = `${voice.name} (${voice.lang})`;
+                            this.elements.voiceSelect.appendChild(option);
+                        });
+                    }
+                };
+
+                if (this.synthesis.getVoices().length > 0) {
+                    updateVoices();
+                } else {
+                    this.synthesis.addEventListener('voiceschanged', updateVoices);
+                }
+            }
+
+            startListening() {
+                if (this.isSpeaking) {
+                    this.stopSpeaking();
+                }
+
+                try {
+                    this.recognition.start();
+                } catch (error) {
+                    console.error('Start listening error:', error);
+                    this.showMessage('Mikrofon başlatılamadı. Lütfen mikrofon iznini kontrol edin.', 'error');
+                }
+            }
+
+            stopListening() {
+                this.isListening = false;
+                this.elements.aiAvatar.classList.remove('listening');
+                this.elements.waveContainer.style.display = 'none';
+                this.elements.micBtn.classList.remove('active');
+                this.elements.stopBtn.style.display = 'none';
+                this.updateStatus('Dinlemeye Hazır', 'Mikrofon butonuna basarak konuşmaya başlayın');
+                
+                if (this.recognition) {
+                    this.recognition.stop();
+                }
+            }
+
+            async processUserInput(input) {
+                this.updateStatus('İşleniyor...', 'Yanıtınız hazırlanıyor');
+                
+                // Simulated AI response - gerçek bir AI API'si ile değiştirilebilir
+                const response = await this.generateAIResponse(input);
+                
+                this.addToTranscript('ai', 'Neva', response);
+                this.speak(response);
+            }
+
+            async generateAIResponse(input) {
+                // Basit pattern matching - gerçek AI ile değiştirilebilir
+                const responses = {
+                    'merhaba': 'Merhaba! Size nasıl yardımcı olabilirim?',
+                    'nasılsın': 'Ben iyiyim, teşekkür ederim. Siz nasılsınız?',
+                    'kaygı': 'Kaygı hissetmek normal bir durum. Derin nefes alarak başlayalım. 4 saniye nefes alın, 7 saniye tutun, 8 saniye verin.',
+                    'stres': 'Stres ile başa çıkmanın birçok yolu var. Öncelikle nefes egzersizleri yapabilir, ardından stresi tetikleyen faktörleri belirleyebiliriz.',
+                    'uyku': 'Uyku problemi yaşıyorsanız, uyku hijyeni kurallarını uygulamaya başlayabiliriz. Yatmadan önce ekran kullanımını azaltmak önemli.',
+                    'teşekkür': 'Rica ederim! Size yardımcı olabildiğim için mutluyum. Başka bir konuda destek almak ister misiniz?'
+                };
+
+                // Simple keyword matching
+                const lowercaseInput = input.toLowerCase();
+                for (const [keyword, response] of Object.entries(responses)) {
+                    if (lowercaseInput.includes(keyword)) {
+                        return response;
+                    }
+                }
+
+                // Default responses
+                const defaultResponses = [
+                    'Anlıyorum. Bu konuda size nasıl yardımcı olabilirim?',
+                    'Bu durum gerçekten zor olmalı. Daha fazla ayrıntı verebilir misiniz?',
+                    'Hislerinizi anlıyorum. Bu konuda konuşmak istediğiniz başka bir şey var mı?',
+                    'Size destek olmak için buradayım. Bu durumla ilgili neler düşünüyorsunuz?'
+                ];
+
+                return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+            }
+
+            speak(text) {
+                if (this.isSpeaking) {
+                    this.synthesis.cancel();
+                }
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Voice settings
+                const selectedVoiceIndex = this.elements.voiceSelect.value;
+                if (selectedVoiceIndex && this.voices[selectedVoiceIndex]) {
+                    utterance.voice = this.voices[selectedVoiceIndex];
+                }
+                
+                utterance.rate = parseFloat(this.elements.speedRange.value);
+                utterance.pitch = parseFloat(this.elements.pitchRange.value);
+                utterance.volume = 1;
+
+                utterance.onstart = () => {
+                    this.isSpeaking = true;
+                    this.elements.aiAvatar.classList.add('speaking');
+                    this.updateStatus('Konuşuyorum...', 'Yanıt veriliyor');
+                };
+
+                utterance.onend = () => {
+                    this.isSpeaking = false;
+                    this.elements.aiAvatar.classList.remove('speaking');
+                    this.updateStatus('Dinlemeye Hazır', 'Mikrofon butonuna basarak konuşmaya başlayın');
+                };
+
+                utterance.onerror = (event) => {
+                    console.error('Speech synthesis error:', event);
+                    this.showMessage('Ses hatası. Lütfen mikrofon izni verin.', 'error');
+                    this.isSpeaking = false;
+                    this.elements.aiAvatar.classList.remove('speaking');
+                };
+
+                this.synthesis.speak(utterance);
+            }
+
+            stopSpeaking() {
+                if (this.synthesis.speaking) {
+                    this.synthesis.cancel();
+                }
+                this.isSpeaking = false;
+                this.elements.aiAvatar.classList.remove('speaking');
+            }
+
+            speakWelcome() {
+                setTimeout(() => {
+                    this.speak('Merhaba! Ben Neva, yapay zeka destekli psikolojik destek asistanınız. Size nasıl yardımcı olabilirim?');
+                }, 1000);
+            }
+
+            addToTranscript(type, speaker, text) {
+                const transcriptItem = document.createElement('div');
+                transcriptItem.className = `transcript-item ${type}`;
+                
+                transcriptItem.innerHTML = `
+                    <div class="transcript-speaker">${speaker}</div>
+                    <div class="transcript-text">${text}</div>
+                `;
+                
+                this.elements.transcriptBox.appendChild(transcriptItem);
+                this.elements.transcriptBox.scrollTop = this.elements.transcriptBox.scrollHeight;
+            }
+
+            updateStatus(status, description) {
+                this.elements.statusText.textContent = status;
+                this.elements.statusDescription.textContent = description;
+            }
+
+            showMessage(text, type = 'info') {
+                const message = document.createElement('div');
+                message.className = `message ${type}`;
+                message.textContent = text;
+                
+                this.elements.messageContainer.appendChild(message);
+                
+                setTimeout(() => {
+                    message.remove();
+                }, 5000);
+            }
+
+            toggleSettings() {
+                this.elements.settingsPanel.classList.toggle('active');
+            }
+
+            updateSettings() {
+                // Settings are applied in the speak method
+                this.showMessage('Ayarlar güncellendi', 'success');
+            }
+        }
+
+        // Initialize voice chat when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const voiceChat = new VoiceChat();
+        });
+    </script>
+</body>
+</html>
